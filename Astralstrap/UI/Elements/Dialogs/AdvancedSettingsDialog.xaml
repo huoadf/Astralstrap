@@ -24,7 +24,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <ui:TitleBar Grid.Row="0" Grid.ColumnSpan="2" Padding="8" Title="Advanced Settings" Icon="pack://application:,,,/Astralstrap.ico" ShowMinimize="False" ShowMaximize="False" CanMaximize="False" KeyboardNavigation.TabNavigation="None" />
+        <ui:TitleBar Grid.Row="0" Grid.ColumnSpan="2" Padding="8" Title="Advanced Settings" Icon="pack://application:,,,/Astralstrap.png" ShowMinimize="False" ShowMaximize="False" CanMaximize="False" KeyboardNavigation.TabNavigation="None" />
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
             <StackPanel>
                 <TextBlock Text="Advanced and Miscellaneous settings for the fastflag editor" TextWrapping="Wrap" Foreground="{DynamicResource TextFillColorSecondaryBrush}" FontSize="12"/>

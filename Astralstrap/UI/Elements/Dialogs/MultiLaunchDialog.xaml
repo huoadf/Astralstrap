@@ -22,7 +22,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <ui:TitleBar Grid.Row="0" Margin="-16,-16,-16,8" Padding="8" Title="Astralstrap â€” Multi-Instance Launcher" CanMaximize="False" Icon="pack://application:,,,/Astralstrap.ico" />
+        <ui:TitleBar Grid.Row="0" Margin="-16,-16,-16,8" Padding="8" Title="Astralstrap â€” Multi-Instance Launcher" CanMaximize="False" Icon="pack://application:,,,/Astralstrap.png" />
 
         <StackPanel Grid.Row="1" Margin="0,0,0,12">
             <TextBlock Text="Automated Multi-Account Launching" FontSize="18" FontWeight="Bold" Margin="0,0,0,4"/>

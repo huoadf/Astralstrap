@@ -27,7 +27,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <ui:TitleBar Padding="8" Grid.Row="0" ForceShutdown="False" MinimizeToTray="False" UseSnapLayout="True" Title="Game Information" Icon="pack://application:,,,/Astralstrap.ico" />
+        <ui:TitleBar Padding="8" Grid.Row="0" ForceShutdown="False" MinimizeToTray="False" UseSnapLayout="True" Title="Game Information" Icon="pack://application:,,,/Astralstrap.png" />
 
         <Grid Grid.Row="1" 
               Visibility="{Binding IsDataLoading, Converter={StaticResource BooleanToVisibilityConverter}}"

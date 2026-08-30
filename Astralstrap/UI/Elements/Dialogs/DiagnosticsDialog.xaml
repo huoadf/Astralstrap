@@ -20,7 +20,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <ui:TitleBar Grid.Row="0" Margin="-16,-16,-16,8" Padding="8" Title="Astralstrap — Diagnostics &amp; Crash Analyzer" CanMaximize="True" Icon="pack://application:,,,/Astralstrap.ico" />
+        <ui:TitleBar Grid.Row="0" Margin="-16,-16,-16,8" Padding="8" Title="Astralstrap — Diagnostics &amp; Crash Analyzer" CanMaximize="True" Icon="pack://application:,,,/Astralstrap.png" />
 
         <TabControl Grid.Row="1">
             <TabItem Header="System &amp; Environment">

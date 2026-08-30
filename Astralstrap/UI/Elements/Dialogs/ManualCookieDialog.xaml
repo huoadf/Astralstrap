@@ -30,7 +30,7 @@
             Padding="8"
             CanMaximize="False"
             ShowMaximize="False"
-            Icon="pack://application:,,,/Astralstrap.ico"
+            Icon="pack://application:,,,/Astralstrap.png"
             KeyboardNavigation.TabNavigation="None"
             ShowMinimize="False" />
 

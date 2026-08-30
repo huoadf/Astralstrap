@@ -21,6 +21,8 @@
 
   <ItemGroup>
     <Resource Include="Astralstrap.ico" />
+    <Resource Include="Astralstrap.png" />
+    <Resource Include="Resources\Astralstrap.png" />
 	<Resource Include="Resources\BootstrapperStyles\TwentyFiveDialog\PlayerLogo.png" />
     <Resource Include="Resources\BootstrapperStyles\TwentyFiveDialog\Roblox.png" />
     <Resource Include="Resources\BootstrapperStyles\TwentyFiveDialog\Studio.png" />

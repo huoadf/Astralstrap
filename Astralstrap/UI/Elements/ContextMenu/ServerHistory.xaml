@@ -36,7 +36,7 @@
             Grid.ColumnSpan="2"
             Padding="8"
             CanMaximize="False"
-            Icon="pack://application:,,,/Astralstrap.ico"
+            Icon="pack://application:,,,/Astralstrap.png"
             KeyboardNavigation.TabNavigation="None"
             ShowMaximize="False"
             ShowMinimize="False" />

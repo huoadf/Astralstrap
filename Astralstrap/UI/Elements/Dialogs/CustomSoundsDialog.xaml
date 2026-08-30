@@ -20,7 +20,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <ui:TitleBar Grid.Row="0" Margin="-16,-16,-16,8" Padding="8" Title="Astralstrap — Custom Sounds &amp; Audio" CanMaximize="False" Icon="pack://application:,,,/Astralstrap.ico" />
+        <ui:TitleBar Grid.Row="0" Margin="-16,-16,-16,8" Padding="8" Title="Astralstrap — Custom Sounds &amp; Audio" CanMaximize="False" Icon="pack://application:,,,/Astralstrap.png" />
 
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
             <StackPanel Margin="0,0,8,0">

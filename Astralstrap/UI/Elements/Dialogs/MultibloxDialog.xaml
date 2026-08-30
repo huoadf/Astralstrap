@@ -25,7 +25,7 @@
         <ui:TitleBar Grid.Row="0"
                      Padding="8"
                      Title="Multiblox"
-                     Icon="pack://application:,,,/Astralstrap.ico"
+                     Icon="pack://application:,,,/Astralstrap.png"
                      ShowMinimize="False"
                      ShowMaximize="False"
                      CanMaximize="False" />

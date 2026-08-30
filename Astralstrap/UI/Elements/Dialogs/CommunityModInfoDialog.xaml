@@ -18,7 +18,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <ui:TitleBar Grid.Row="0" Padding="8" Title="Mod Information" CanMaximize="False" Icon="pack://application:,,,/Astralstrap.ico" />
+        <ui:TitleBar Grid.Row="0" Padding="8" Title="Mod Information" CanMaximize="False" Icon="pack://application:,,,/Astralstrap.png" />
 
         <Grid Grid.Row="1" Margin="16,0,16,16">
             <Grid.ColumnDefinitions>
