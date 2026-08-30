@@ -1,4 +1,4 @@
-﻿using Bloxstrap.UI.ViewModels.Settings;
+using Bloxstrap.UI.ViewModels.Settings;
 using System.Windows;
 using System.Windows.Controls;
 using Wpf.Ui.Mvvm.Contracts;
@@ -27,6 +27,7 @@ namespace Bloxstrap.UI.Elements.Settings.Pages
             _viewModel.OpenModGeneratorEvent += OpenModGenerator;
             _viewModel.OpenCommunityModsEvent += OpenCommunityMods;
             _viewModel.OpenPresetModsEvent += OpenPresetMods;
+            _viewModel.OpenModPreviewEvent += OpenModPreview;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e) => SetupViewModel();
@@ -89,6 +90,13 @@ namespace Bloxstrap.UI.Elements.Settings.Pages
             {
                 window.Navigate(typeof(ModsPresetsPage));
             }
+        }
+
+        private void OpenModPreview(object? sender, EventArgs e)
+        {
+            var dialog = new Bloxstrap.UI.Elements.Dialogs.ModPreviewDialog();
+            dialog.Owner = Window.GetWindow(this);
+            dialog.ShowDialog();
         }
     }
 }

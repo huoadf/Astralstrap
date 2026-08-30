@@ -12,12 +12,15 @@ namespace Bloxstrap.UI.ViewModels.Settings
         public event EventHandler? OpenModGeneratorEvent;
         public event EventHandler? OpenCommunityModsEvent;
         public event EventHandler? OpenPresetModsEvent;
+        public event EventHandler? OpenModPreviewEvent;
         private void OpenModGenerator() => OpenModGeneratorEvent?.Invoke(this, EventArgs.Empty);
         private void OpenCommunityMods() => OpenCommunityModsEvent?.Invoke(this, EventArgs.Empty);
         private void OpenPresetMods() => OpenPresetModsEvent?.Invoke(this, EventArgs.Empty);
+        private void OpenModPreview() => OpenModPreviewEvent?.Invoke(this, EventArgs.Empty);
         public ICommand OpenModGeneratorCommand => new RelayCommand(OpenModGenerator);
         public ICommand OpenCommunityModsCommand => new RelayCommand(OpenCommunityMods);
         public ICommand OpenPresetModsCommand => new RelayCommand(OpenPresetMods);
+        public ICommand OpenModPreviewCommand => new RelayCommand(OpenModPreview);
 
         public ObservableCollection<ModConfig> Modifications { get; set; } = new();
 
