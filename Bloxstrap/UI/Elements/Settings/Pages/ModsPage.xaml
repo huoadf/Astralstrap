@@ -1,4 +1,4 @@
-﻿<ui:UiPage
+<ui:UiPage
     x:Class="Bloxstrap.UI.Elements.Settings.Pages.ModsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -58,12 +58,26 @@
 
         <ui:InfoBar Severity="Informational" Message="You can drag and drop your mod to auto add it here" Padding="8" IsOpen="True" Title="Important" IsClosable="False" Background="{DynamicResource PrimaryBackgroundColor}" />
 
-        <ui:Button Margin="0,8,0,8"
-           Icon="Add24"
-           Content="Add new mod"
-           HorizontalAlignment="Stretch"
-           Appearance="Secondary"
-           Command="{Binding AddModCommand}" />
+        <Grid Margin="0,8,0,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <ui:Button Grid.Column="0"
+               Margin="0,0,4,0"
+               Icon="Add24"
+               Content="Add new mod"
+               HorizontalAlignment="Stretch"
+               Appearance="Secondary"
+               Command="{Binding AddModCommand}" />
+            <ui:Button Grid.Column="1"
+               Margin="4,0,0,0"
+               Icon="Warning24"
+               Content="Check Mod Conflicts"
+               HorizontalAlignment="Stretch"
+               Appearance="Secondary"
+               Command="{Binding CheckConflictsCommand}" />
+        </Grid>
 
         <ItemsControl ItemsSource="{Binding Modifications, Mode=OneWay}">
             <ItemsControl.ItemTemplate>

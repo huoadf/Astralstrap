@@ -1,4 +1,4 @@
-﻿using System.Windows.Input;
+using System.Windows.Input;
 
 using CommunityToolkit.Mvvm.Input;
 
@@ -91,6 +91,12 @@ namespace Bloxstrap.UI.ViewModels.Settings
         {
             get => App.FastFlags.GetPreset("Graphic.GraySky") == "True";
             set => App.FastFlags.SetPreset("Graphic.GraySky", value ? "True" : null);
+        }
+
+        public bool FPSGraphOverlay
+        {
+            get => App.FastFlags.GetPreset("Rendering.FPSOverlay") == "True";
+            set => App.FastFlags.SetPreset("Rendering.FPSOverlay", value ? "True" : null);
         }
 
         public bool UseFastFlagManager

@@ -1,4 +1,4 @@
-﻿namespace Bloxstrap.Enums
+namespace Bloxstrap.Enums
 {
     public enum Theme
     {
@@ -6,7 +6,7 @@
         Default,
         Dark,
         Light,
-        Froststrap,
+        Astralstrap,
         Purple,
         Blue,
         Green,

@@ -1,4 +1,4 @@
-﻿using Bloxstrap.Integrations;
+using Bloxstrap.Integrations;
 using Bloxstrap.UI.Elements.ContextMenu;
 using System.Windows;
 
@@ -28,8 +28,8 @@ namespace Bloxstrap.UI
 
             _notifyIcon = new(new System.ComponentModel.Container())
             {
-                Icon = Properties.Resources.IconBloxstrap,
-                Text = "Froststrap",
+                Icon = App.Settings.Prop.BootstrapperIcon.GetIcon(),
+                Text = $"{App.ProjectName} (Idle)",
                 Visible = true
             };
 
@@ -87,11 +87,42 @@ namespace Bloxstrap.UI
                 }
             };
 
-            if (_activityWatcher is not null && (App.Settings.Prop.ShowServerDetails || App.Settings.Prop.ShowServerUptime))
-                _activityWatcher.OnGameJoin += OnGameJoin;
+            if (_activityWatcher is not null)
+            {
+                if (App.Settings.Prop.ShowServerDetails || App.Settings.Prop.ShowServerUptime)
+                    _activityWatcher.OnGameJoin += OnGameJoin;
+
+                _activityWatcher.OnLogOpen += (s, e) => UpdateTrayState("Launching...");
+                _activityWatcher.OnGameJoin += (s, e) => UpdateTrayState("In Game");
+                _activityWatcher.OnGameLeave += (s, e) => UpdateTrayState("In Menu");
+                _activityWatcher.OnStudioPlaceOpened += (s, e) => UpdateTrayState("In Studio");
+                _activityWatcher.OnStudioPlaceClosed += (s, e) => UpdateTrayState("Studio Idle");
+                _activityWatcher.OnAppClose += (s, e) => UpdateTrayState("Idle");
+            }
 
             _menuContainer = new(_watcher);
             _menuContainer.Show();
+        }
+
+        public void UpdateTrayState(string statusText, System.Drawing.Icon? customIcon = null)
+        {
+            try
+            {
+                if (customIcon != null)
+                    _notifyIcon.Icon = customIcon;
+                else
+                    _notifyIcon.Icon = App.Settings.Prop.BootstrapperIcon.GetIcon();
+
+                string fullText = $"{App.ProjectName} - {statusText}";
+                if (fullText.Length >= 64)
+                    fullText = fullText[..60] + "...";
+
+                _notifyIcon.Text = fullText;
+            }
+            catch (Exception ex)
+            {
+                App.Logger.WriteLine("NotifyIconWrapper::UpdateTrayState", $"Failed to update tray state: {ex.Message}");
+            }
         }
 
         #region Context menu

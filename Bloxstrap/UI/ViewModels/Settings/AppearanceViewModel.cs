@@ -1,4 +1,4 @@
-﻿using Bloxstrap.UI.Elements.Dialogs;
+using Bloxstrap.UI.Elements.Dialogs;
 using Bloxstrap.UI.Elements.Editor;
 using Bloxstrap.UI.Elements.Settings;
 using CommunityToolkit.Mvvm.Input;
@@ -170,6 +170,32 @@ namespace Bloxstrap.UI.ViewModels.Settings
 
                 ((MainWindow)Window.GetWindow(_page)!).ApplyTheme();
                 OnPropertyChanged(nameof(CustomGlobalThemeExpanded));
+            }
+        }
+
+        public IEnumerable<CornerStyle> CornerStyles { get; } = Enum.GetValues(typeof(CornerStyle)).Cast<CornerStyle>();
+
+        public CornerStyle CornerStyle
+        {
+            get => App.Settings.Prop.CornerStyle;
+            set
+            {
+                App.Settings.Prop.CornerStyle = value;
+                ((MainWindow)Window.GetWindow(_page)!).ApplyTheme();
+                OnPropertyChanged(nameof(CornerStyle));
+            }
+        }
+
+        public IEnumerable<LayoutDensity> LayoutDensities { get; } = Enum.GetValues(typeof(LayoutDensity)).Cast<LayoutDensity>();
+
+        public LayoutDensity LayoutDensity
+        {
+            get => App.Settings.Prop.LayoutDensity;
+            set
+            {
+                App.Settings.Prop.LayoutDensity = value;
+                ((MainWindow)Window.GetWindow(_page)!).ApplyTheme();
+                OnPropertyChanged(nameof(LayoutDensity));
             }
         }
 

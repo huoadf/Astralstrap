@@ -325,13 +325,36 @@ namespace Bloxstrap.Integrations
 
             if (!_activityWatcher.InGame)
             {
-                App.Logger.WriteLine(LOG_IDENT, "Not in game, clearing presence");
+                if (App.Settings.Prop.ShowIdleInMenuRichPresence)
+                {
+                    App.Logger.WriteLine(LOG_IDENT, "Not in game, setting Idle / Menu presence");
+                    _currentPresence = new DiscordRPC.RichPresence
+                    {
+                        Details = "In Roblox Menu",
+                        State = "Browsing Experiences",
+                        Assets = new Assets
+                        {
+                            LargeImageKey = "roblox",
+                            LargeImageText = "Roblox",
+                            SmallImageKey = "roblox",
+                            SmallImageText = App.ProjectName
+                        },
+                        Timestamps = new Timestamps { Start = DateTime.UtcNow }
+                    };
+                    _originalPresence = _currentPresence.Clone();
+                    UpdatePresence();
+                    return true;
+                }
+                else
+                {
+                    App.Logger.WriteLine(LOG_IDENT, "Not in game, clearing presence");
 
-                _currentPresence = _originalPresence = null;
-                _messageQueue.Clear();
+                    _currentPresence = _originalPresence = null;
+                    _messageQueue.Clear();
 
-                UpdatePresence();
-                return true;
+                    UpdatePresence();
+                    return true;
+                }
             }
 
             string icon = "roblox";

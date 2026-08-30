@@ -1,4 +1,4 @@
-﻿using Bloxstrap.Integrations;
+using Bloxstrap.Integrations;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Win32;
 using Newtonsoft.Json.Linq;
@@ -178,10 +178,22 @@ namespace Bloxstrap.UI.ViewModels.Settings
                     DiscordActivityJoinEnabled = value;
                     EnableCustomStatusDisplay = value;
                     DiscordAccountOnProfile = value;
+                    ShowIdleInMenuRichPresence = value;
                     OnPropertyChanged(nameof(DiscordActivityJoinEnabled));
                     OnPropertyChanged(nameof(EnableCustomStatusDisplay));
                     OnPropertyChanged(nameof(DiscordAccountOnProfile));
+                    OnPropertyChanged(nameof(ShowIdleInMenuRichPresence));
                 }
+            }
+        }
+
+        public bool ShowIdleInMenuRichPresence
+        {
+            get => App.Settings.Prop.ShowIdleInMenuRichPresence;
+            set
+            {
+                App.Settings.Prop.ShowIdleInMenuRichPresence = value;
+                OnPropertyChanged(nameof(ShowIdleInMenuRichPresence));
             }
         }
 

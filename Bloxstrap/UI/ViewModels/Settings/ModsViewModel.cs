@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
@@ -258,6 +258,60 @@ namespace Bloxstrap.UI.ViewModels.Settings
                 }
             }
             UpdatePriorities();
+        }
+
+        public ICommand CheckConflictsCommand => new RelayCommand(CheckConflicts);
+
+        private void CheckConflicts()
+        {
+            if (Modifications.Count < 2)
+            {
+                Frontend.ShowMessageBox("Add at least two mods to scan for file conflicts.", MessageBoxImage.Information);
+                return;
+            }
+
+            var fileMap = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
+
+            foreach (var mod in Modifications)
+            {
+                string modPath = Path.Combine(Paths.Modifications, mod.FolderName);
+                if (!Directory.Exists(modPath)) continue;
+
+                var allFiles = Directory.GetFiles(modPath, "*.*", SearchOption.AllDirectories);
+                foreach (var file in allFiles)
+                {
+                    string relativePath = Path.GetRelativePath(modPath, file);
+                    if (!fileMap.ContainsKey(relativePath))
+                        fileMap[relativePath] = new List<string>();
+
+                    fileMap[relativePath].Add(mod.FolderName);
+                }
+            }
+
+            var conflicts = fileMap.Where(kvp => kvp.Value.Count > 1).ToList();
+
+            if (conflicts.Count == 0)
+            {
+                Frontend.ShowMessageBox("✅ No Mod Conflicts Detected!\n\nAll installed mods modify unique, non-overlapping game files.", MessageBoxImage.Information);
+                return;
+            }
+
+            var sb = new StringBuilder();
+            sb.AppendLine($"⚠️ Mod Conflict Warning — {conflicts.Count} overlapping file(s) found:\n");
+
+            foreach (var conflict in conflicts.Take(15))
+            {
+                sb.AppendLine($"• File: {conflict.Key}");
+                sb.AppendLine($"  Touched by: {string.Join(" & ", conflict.Value)}");
+                sb.AppendLine($"  (Priority winner: '{conflict.Value.Last()}')\n");
+            }
+
+            if (conflicts.Count > 15)
+            {
+                sb.AppendLine($"...and {conflicts.Count - 15} more overlapping file(s).");
+            }
+
+            Frontend.ShowMessageBox(sb.ToString(), MessageBoxImage.Warning);
         }
     }
 }

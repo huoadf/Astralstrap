@@ -1,4 +1,4 @@
-﻿using System.Windows;
+using System.Windows;
 
 using Bloxstrap.UI.Elements.Bootstrapper;
 using Bloxstrap.UI.Elements.Dialogs;
@@ -95,7 +95,8 @@ namespace Bloxstrap.UI
                 BootstrapperStyle.ClassicFluentDialog => new ClassicFluentDialog(),
                 BootstrapperStyle.TwentyFiveDialog => new TwentyFiveDialog(),
                 BootstrapperStyle.ByfronDialog => new ByfronDialog(),
-                BootstrapperStyle.FroststrapDialog => new FroststrapDialog(),
+                BootstrapperStyle.AstralstrapDialog => new FroststrapDialog(),
+                BootstrapperStyle.ModernGlowDialog => new ModernGlowDialog(),
                 BootstrapperStyle.FluentDialog => new FluentDialog(false),
                 BootstrapperStyle.FluentAeroDialog => new FluentDialog(true),
                 BootstrapperStyle.CustomDialog => GetCustomBootstrapper(),

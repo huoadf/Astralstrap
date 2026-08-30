@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
 
 namespace Bloxstrap.Models.Persistable
 {
@@ -19,6 +19,7 @@ namespace Bloxstrap.Models.Persistable
         public bool HideRPCButtons { get; set; } = true;
         public bool EnableCustomStatusDisplay { get; set; } = true;
         public bool ShowAccountOnRichPresence { get; set; } = false;
+        public bool ShowIdleInMenuRichPresence { get; set; } = true;
         public bool StudioRPC { get; set; } = false;
         public bool StudioThumbnailChanging { get; set; } = false;
         public bool StudioEditingInfo { get; set; } = false;
@@ -47,7 +48,7 @@ namespace Bloxstrap.Models.Persistable
         public bool UseAltManually { get; set; } = true;
 
         // Appearance Page
-        public BootstrapperStyle BootstrapperStyle { get; set; } = BootstrapperStyle.FroststrapDialog;
+        public BootstrapperStyle BootstrapperStyle { get; set; } = BootstrapperStyle.ModernGlowDialog;
         public BootstrapperIcon BootstrapperIcon { get; set; } = BootstrapperIcon.IconBloxstrap;
         public WindowsBackdrops SelectedBackdrop { get; set; } = WindowsBackdrops.Mica;
         public string Locale { get; set; } = "nil";
@@ -63,6 +64,8 @@ namespace Bloxstrap.Models.Persistable
         public string? BackgroundImagePath { get; set; }
         public BackgroundStretch BackgroundStretch { get; set; } = BackgroundStretch.UniformToFill;
         public double BackgroundOpacity { get; set; } = 1.0;
+        public CornerStyle CornerStyle { get; set; } = CornerStyle.Default;
+        public LayoutDensity LayoutDensity { get; set; } = LayoutDensity.Standard;
         public string BootstrapperTitle { get; set; } = App.ProjectName;
         public string BootstrapperIconCustomLocation { get; set; } = "";
         public string DownloadingStringFormat { get; set; } = Strings.Bootstrapper_Status_Downloading + " {0} - {1}MB / {2}MB";

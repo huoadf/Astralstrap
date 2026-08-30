@@ -19,15 +19,15 @@ namespace Bloxstrap
     public partial class App : Application
     {
 #if QA_BUILD
-        public const string ProjectName = "Froststrap-QA";
+        public const string ProjectName = "Astralstrap-QA";
 #else
-        public const string ProjectName = "Froststrap";
+        public const string ProjectName = "Astralstrap";
 #endif
-        public const string ProjectOwner = "Froststrap";
-        public const string ProjectRepository = "Froststrap/Froststrap";
-        public const string ProjectDownloadLink = "https://github.com/Froststrap/Froststrap/releases";
+        public const string ProjectOwner = "Astralstrap";
+        public const string ProjectRepository = "Astralstrap/Astralstrap";
+        public const string ProjectDownloadLink = "https://github.com/Astralstrap/Astralstrap/releases";
         public const string ProjectHelpLink = "https://github.com/bloxstraplabs/bloxstrap/wiki";
-        public const string ProjectSupportLink = "https://github.com/Froststrap/Froststrap/issues/new";
+        public const string ProjectSupportLink = "https://github.com/Astralstrap/Astralstrap/issues/new";
         public const string ProjectRemoteDataLink = "https://raw.githubusercontent.com/RealMeddsam/config/refs/heads/main/Data.json";
 
         public const string RobloxPlayerAppName = "RobloxPlayerBeta.exe";

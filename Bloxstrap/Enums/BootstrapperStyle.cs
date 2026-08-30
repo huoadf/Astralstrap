@@ -1,4 +1,4 @@
-﻿namespace Bloxstrap.Enums
+namespace Bloxstrap.Enums
 {
     public enum BootstrapperStyle
     {
@@ -10,7 +10,8 @@
         TwentyFiveDialog,
         ByfronDialog,
         FluentDialog,
-        FroststrapDialog,
+        AstralstrapDialog,
+        ModernGlowDialog,
         FluentAeroDialog,
         CustomDialog
     }

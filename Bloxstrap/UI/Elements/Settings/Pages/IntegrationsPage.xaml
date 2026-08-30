@@ -1,4 +1,4 @@
-﻿<ui:UiPage
+<ui:UiPage
     x:Class="Bloxstrap.UI.Elements.Settings.Pages.IntegrationsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -203,6 +203,13 @@
             Header="{x:Static resources:Strings.Menu_Integrations_ShowAccountOnProfile_Title}"
             IsEnabled="{Binding InnerContent.IsChecked, ElementName=DiscordActivityOption, Mode=OneWay}">
             <ui:ToggleSwitch IsChecked="{Binding DiscordAccountOnProfile, Mode=TwoWay}" />
+        </controls:OptionControl>
+
+        <controls:OptionControl
+            Description="Display your Discord Rich Presence when idle in the Roblox main menu before joining an experience."
+            Header="Show Idle in Menu State"
+            IsEnabled="{Binding InnerContent.IsChecked, ElementName=DiscordActivityOption, Mode=OneWay}">
+            <ui:ToggleSwitch IsChecked="{Binding ShowIdleInMenuRichPresence, Mode=TwoWay}" />
         </controls:OptionControl>
 
         <TextBlock

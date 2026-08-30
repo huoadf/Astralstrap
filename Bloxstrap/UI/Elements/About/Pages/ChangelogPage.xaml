@@ -1,0 +1,62 @@
+﻿<ui:UiPage x:Class="Bloxstrap.UI.Elements.About.Pages.ChangelogPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:controls="clr-namespace:Bloxstrap.UI.Elements.Controls"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      mc:Ignorable="d"
+      d:DesignHeight="800" d:DesignWidth="800"
+      Title="ChangelogPage"
+      Scrollable="True">
+    <StackPanel Margin="0,0,14,14">
+        <TextBlock Text="Changelog &amp; Release History" FontSize="20" FontWeight="Bold" Margin="0,0,0,4" />
+        <TextBlock Text="All changes, enhancements, and features introduced in this build." Foreground="{DynamicResource TextFillColorTertiaryBrush}" Margin="0,0,0,16" />
+
+        <ui:CardExpander Margin="0,0,0,12" IsExpanded="True">
+            <ui:CardExpander.Header>
+                <StackPanel>
+                    <TextBlock Text="v2.0.0 — Astralstrap Custom Release" FontWeight="SemiBold" FontSize="15" />
+                    <TextBlock Text="Custom fork release with expanded features &amp; UI customizations" Foreground="{DynamicResource TextFillColorSecondaryBrush}" FontSize="12" />
+                </StackPanel>
+            </ui:CardExpander.Header>
+            <StackPanel Margin="4">
+                <controls:MarkdownTextBlock MarkdownText="
+### 🌟 What's New in Astralstrap
+
+#### 🎨 Visuals &amp; Themes
+- **Modern Animated Splash**: Added a floating neon-glow animated bootstrapper dialog with pulsing icon and smooth shimmers.
+- **Corner Geometry Styles**: Choose between Fluent Rounded curves, modern Flat Sharp edges, and Pill-shaped corners.
+- **Layout Density Options**: Switch between Standard, Compact, and Minimal layout density for all settings pages.
+- **Tray Status Integration**: System tray icon now dynamically reflects live Roblox status (*Idle, Launching, In Game, Studio*).
+
+#### ⚡ Performance &amp; FastFlags
+- **Profiles Engine**: Quick-switch between competitive FPS, balanced, and high-quality graphics presets.
+- **Process Optimization**: Dynamic Roblox process priority tuning and automated crash handler cleanup.
+- **Multi-Instance Support**: Native singleton mutex handling to cleanly launch multiple client accounts.
+
+#### 🎮 Discord RPC &amp; Game History
+- **Live RPC Telemetry**: Integrated RoValra server location detection and playtime counter.
+- **Studio Rich Presence**: Telemetry for active scripts, line counts, and script type detection.
+" />
+            </StackPanel>
+        </ui:CardExpander>
+
+        <ui:CardExpander Margin="0,0,0,12" IsExpanded="False">
+            <ui:CardExpander.Header>
+                <StackPanel>
+                    <TextBlock Text="v1.5.0 — Base Engine" FontWeight="SemiBold" FontSize="15" />
+                    <TextBlock Text="Upstream Froststrap/Fishstrap foundation" Foreground="{DynamicResource TextFillColorSecondaryBrush}" FontSize="12" />
+                </StackPanel>
+            </ui:CardExpander.Header>
+            <StackPanel Margin="4">
+                <controls:MarkdownTextBlock MarkdownText="
+- FastFlag manager with allowlist validation.
+- Procedural hex mod tinting for cursors and shift locks.
+- Account manager and friend activity browser.
+- Network and region selector.
+" />
+            </StackPanel>
+        </ui:CardExpander>
+    </StackPanel>
+</ui:UiPage>

@@ -1,4 +1,4 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interop;
 using System.Windows.Threading;
@@ -66,6 +66,7 @@ namespace Bloxstrap.UI.Elements.ContextMenu
 
             RichPresenceMenuItem.Visibility = (_watcher.PlayerRichPresence is not null || _watcher.StudioRichPresence is not null) ? Visibility.Visible : Visibility.Collapsed;
             VersionTextBlock.Text = $"{App.ProjectName} v{App.Version}";
+            PopulateAccountsMenu();
         }
 
         private void StartTotalPlaytimeTimer()
@@ -336,6 +337,46 @@ namespace Bloxstrap.UI.Elements.ContextMenu
             }
 
             Frontend.ShowMessageBox($"No available {selectedRegion} servers found.", MessageBoxImage.Information);
+        }
+
+        private void PopulateAccountsMenu()
+        {
+            try
+            {
+                AccountsMenuRoot.Items.Clear();
+                var accounts = AccountManager.Shared.Accounts;
+
+                if (accounts.Count == 0)
+                {
+                    var item = new MenuItem { Header = "No Accounts Saved", IsEnabled = false };
+                    AccountsMenuRoot.Items.Add(item);
+                    return;
+                }
+
+                foreach (var acc in accounts)
+                {
+                    bool isActive = AccountManager.Shared.ActiveAccount?.UserId == acc.UserId;
+                    var item = new MenuItem
+                    {
+                        Header = $"{acc.DisplayName} (@{acc.Username})" + (isActive ? " [Active]" : ""),
+                        IsChecked = isActive,
+                        FontWeight = isActive ? FontWeights.Bold : FontWeights.Normal
+                    };
+
+                    item.Click += (s, e) =>
+                    {
+                        AccountManager.Shared.SetActiveAccount(acc);
+                        PopulateAccountsMenu();
+                        Frontend.ShowMessageBox($"Switched active account to {acc.DisplayName} (@{acc.Username}).", MessageBoxImage.Information);
+                    };
+
+                    AccountsMenuRoot.Items.Add(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                App.Logger.WriteLine("MenuContainer::PopulateAccountsMenu", $"Failed to populate accounts menu: {ex.Message}");
+            }
         }
     }
 }

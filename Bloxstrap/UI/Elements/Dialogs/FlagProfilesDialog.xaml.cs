@@ -1,4 +1,4 @@
-﻿using Microsoft.Win32;
+using Microsoft.Win32;
 using System.Windows;
 using Bloxstrap.Resources;
 using System.Reflection;
@@ -265,6 +265,86 @@ namespace Bloxstrap.UI.Elements.Dialogs
 
             Result = MessageBoxResult.OK;
             Close();
+        }
+
+        private void DiffButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (LoadProfile.SelectedItem is not string selectedProfile)
+            {
+                Frontend.ShowMessageBox("Please select a profile to compare.", MessageBoxImage.Warning, MessageBoxButton.OK);
+                return;
+            }
+
+            string profilesDirectory = Path.Combine(Paths.Base, Paths.SavedFlagProfiles);
+            string profilePath = Path.Combine(profilesDirectory, selectedProfile);
+
+            if (!File.Exists(profilePath))
+            {
+                Frontend.ShowMessageBox("Selected profile file not found.", MessageBoxImage.Error, MessageBoxButton.OK);
+                return;
+            }
+
+            try
+            {
+                string jsonText = File.ReadAllText(profilePath);
+                var targetFlags = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonText) ?? new();
+                var currentFlags = App.FastFlags.Prop ?? new();
+
+                var added = targetFlags.Where(kvp => !currentFlags.ContainsKey(kvp.Key)).ToList();
+                var removed = currentFlags.Where(kvp => !targetFlags.ContainsKey(kvp.Key)).ToList();
+                var changed = targetFlags.Where(kvp => currentFlags.ContainsKey(kvp.Key) && currentFlags[kvp.Key]?.ToString() != kvp.Value?.ToString()).ToList();
+
+                var conflicts = new List<string>();
+
+                // Check rendering backend conflicts
+                var renderBackends = new[] { "FFlagDebugGraphicsPreferD3D11", "FFlagDebugGraphicsPreferVulkan", "FFlagDebugGraphicsPreferOpenGL" };
+                var activeRenderFlags = targetFlags.Where(kvp => renderBackends.Contains(kvp.Key) && kvp.Value?.ToString()?.Equals("True", StringComparison.OrdinalIgnoreCase) == true).ToList();
+                if (activeRenderFlags.Count > 1)
+                {
+                    conflicts.Add($"Multiple graphics rendering backends enabled: {string.Join(", ", activeRenderFlags.Select(x => x.Key))}");
+                }
+
+                // Check framerate limiter conflicts
+                if (targetFlags.ContainsKey("FFlagTaskSchedulerLimitTargetFps") && targetFlags.ContainsKey("DFIntTaskSchedulerTargetFps"))
+                {
+                    conflicts.Add("Contains both legacy FFlagTaskSchedulerLimitTargetFps and DFIntTaskSchedulerTargetFps.");
+                }
+
+                var sb = new StringBuilder();
+                sb.AppendLine($"=== Flag Diff: Active Config vs '{selectedProfile}' ===");
+                sb.AppendLine();
+
+                if (conflicts.Count > 0)
+                {
+                    sb.AppendLine("⚠️ POTENTIAL CONFLICTS DETECTED:");
+                    foreach (var conflict in conflicts)
+                        sb.AppendLine($"  • {conflict}");
+                    sb.AppendLine();
+                }
+
+                sb.AppendLine($"[+] Added Flags ({added.Count}):");
+                foreach (var flag in added)
+                    sb.AppendLine($"  + {flag.Key} = {flag.Value}");
+                if (added.Count == 0) sb.AppendLine("  (None)");
+                sb.AppendLine();
+
+                sb.AppendLine($"[~] Modified Flags ({changed.Count}):");
+                foreach (var flag in changed)
+                    sb.AppendLine($"  ~ {flag.Key}: {currentFlags[flag.Key]} -> {flag.Value}");
+                if (changed.Count == 0) sb.AppendLine("  (None)");
+                sb.AppendLine();
+
+                sb.AppendLine($"[-] Removed Flags ({removed.Count}):");
+                foreach (var flag in removed)
+                    sb.AppendLine($"  - {flag.Key} (currently {flag.Value})");
+                if (removed.Count == 0) sb.AppendLine("  (None)");
+
+                Frontend.ShowMessageBox(sb.ToString(), conflicts.Count > 0 ? MessageBoxImage.Warning : MessageBoxImage.Information, MessageBoxButton.OK);
+            }
+            catch (Exception ex)
+            {
+                Frontend.ShowMessageBox($"Failed to calculate flag diff:\n{ex.Message}", MessageBoxImage.Error, MessageBoxButton.OK);
+            }
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)

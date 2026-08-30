@@ -1,4 +1,4 @@
-﻿using Bloxstrap.Enums.FlagPresets;
+using Bloxstrap.Enums.FlagPresets;
 using System.Windows;
 
 namespace Bloxstrap
@@ -23,6 +23,7 @@ namespace Bloxstrap
         {
             // Preset Flags
             { "Rendering.ManualFullscreen", "FFlagHandleAltEnterFullscreenManually" },
+            { "Rendering.FPSOverlay", "FFlagDebugDisplayFPS" },
 
             // Pause Voxelizer
             { "Rendering.PauseVoxerlizer", "DFFlagDebugPauseVoxelizer" },

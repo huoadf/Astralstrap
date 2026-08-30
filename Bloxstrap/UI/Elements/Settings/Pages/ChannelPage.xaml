@@ -17,8 +17,8 @@
     <StackPanel Margin="0,0,14,14">
         <TextBlock Margin="0,0,0,8" Text="{x:Static resources:Strings.Menu_Channel_Description}" FontSize="14" Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
 
-        <TextBlock Text="Froststrap" FontSize="20" FontWeight="Bold" Margin="0,16,0,0" />
-        <controls:OptionControl Header="{x:Static resources:Strings.Menu_Behaviour_AutoUpdate_Title}" Description="Choose how Froststrap handles automatic updates.">
+        <TextBlock Text="Astralstrap" FontSize="20" FontWeight="Bold" Margin="0,16,0,0" />
+        <controls:OptionControl Header="{x:Static resources:Strings.Menu_Behaviour_AutoUpdate_Title}" Description="Choose how Astralstrap handles automatic updates.">
             <ComboBox ItemsSource="{Binding UpdateCheckValues}" 
               SelectedItem="{Binding SelectedUpdateCheck, Mode=TwoWay}" 
               Width="200">
@@ -202,13 +202,54 @@
             <ComboBox Margin="5,0,0,0" Padding="10,5,10,5" Width="200" ItemsSource="{Binding ChannelChangeModes.Keys, Mode=OneTime}" Text="{Binding SelectedChannelChangeMode, Mode=TwoWay}" />
         </controls:OptionControl>
 
+        <Separator Margin="0,8,0,6"/>
+
+        <TextBlock Text="Backup &amp; Data Management" FontSize="20" FontWeight="Bold" Margin="0,8,0,0"/>
+
         <Grid Margin="0,8,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <ui:Button Grid.Column="0"
+               Margin="0,0,4,0"
+               Icon="ArrowDownload24"
+               Content="Backup Settings &amp; Profiles"
+               HorizontalAlignment="Stretch"
+               Appearance="Secondary"
+               Command="{Binding BackupSettingsCommand}" />
+            <ui:Button Grid.Column="1"
+               Margin="4,0,0,0"
+               Icon="ArrowUpload24"
+               Content="Restore From Backup"
+               HorizontalAlignment="Stretch"
+               Appearance="Secondary"
+               Command="{Binding RestoreSettingsCommand}" />
+        </Grid>
+
+        <Separator Margin="0,8,0,6"/>
+
+        <TextBlock Text="Media &amp; Captures" FontSize="20" FontWeight="Bold" Margin="0,8,0,0"/>
+
+        <Grid Margin="0,8,0,0">
+            <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
+            <ui:Button Grid.Column="0"
+               Margin="0,0,4,0"
+               Icon="Image24"
+               Content="Open Screenshots Folder"
+               HorizontalAlignment="Stretch"
+               Appearance="Secondary"
+               Command="{Binding OpenScreenshotsCommand}" />
+            <ui:Button Grid.Column="1"
+               Margin="4,0,0,0"
+               Icon="Video24"
+               Content="Open Recordings Folder"
+               HorizontalAlignment="Stretch"
+               Appearance="Secondary"
+               Command="{Binding OpenRecordingsCommand}" />
         </Grid>
     </StackPanel>
 </ui:UiPage>

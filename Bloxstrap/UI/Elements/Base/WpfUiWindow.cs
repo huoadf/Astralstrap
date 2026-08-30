@@ -1,4 +1,4 @@
-﻿﻿using System.Windows;
+﻿using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -50,10 +50,32 @@ namespace Bloxstrap.UI.Elements.Base
                 ApplyStandardTheme(finalTheme, customThemeIndex);
             }
 
+            ApplyGeometryAndDensity();
+
 #if QA_BUILD
     this.BorderBrush = System.Windows.Media.Brushes.Red;
     this.BorderThickness = new Thickness(4);
 #endif
+        }
+
+        private void ApplyGeometryAndDensity()
+        {
+            CornerRadius cornerRadius = App.Settings.Prop.CornerStyle switch
+            {
+                CornerStyle.Sharp => new CornerRadius(0),
+                CornerStyle.Rounded => new CornerRadius(10),
+                CornerStyle.Pill => new CornerRadius(18),
+                _ => new CornerRadius(4)
+            };
+            Application.Current.Resources["ControlCornerRadius"] = cornerRadius;
+
+            Thickness cardPadding = App.Settings.Prop.LayoutDensity switch
+            {
+                LayoutDensity.Compact => new Thickness(10, 8, 10, 8),
+                LayoutDensity.Minimal => new Thickness(6, 4, 6, 4),
+                _ => new Thickness(16, 12, 16, 12)
+            };
+            Application.Current.Resources["CardPadding"] = cardPadding;
         }
 
         private void ApplyGradientBackground()

@@ -1,6 +1,7 @@
-﻿using Bloxstrap.RobloxInterfaces;
+using Bloxstrap.RobloxInterfaces;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Input;
 using System.Net;
 
 namespace Bloxstrap.UI.ViewModels.Settings
@@ -138,6 +139,108 @@ namespace Bloxstrap.UI.ViewModels.Settings
         {
             get => App.State.Prop.ForceReinstall || IsRobloxInstallationMissing;
             set => App.State.Prop.ForceReinstall = value;
+        }
+
+        public ICommand BackupSettingsCommand => new CommunityToolkit.Mvvm.Input.RelayCommand(BackupSettings);
+        public ICommand RestoreSettingsCommand => new CommunityToolkit.Mvvm.Input.RelayCommand(RestoreSettings);
+        public ICommand OpenScreenshotsCommand => new CommunityToolkit.Mvvm.Input.RelayCommand(OpenScreenshots);
+        public ICommand OpenRecordingsCommand => new CommunityToolkit.Mvvm.Input.RelayCommand(OpenRecordings);
+
+        private void BackupSettings()
+        {
+            try
+            {
+                string backupsDir = Path.Combine(Paths.Base, "Backups");
+                if (!Directory.Exists(backupsDir))
+                    Directory.CreateDirectory(backupsDir);
+
+                string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+                string backupZip = Path.Combine(backupsDir, $"Astralstrap_Backup_{timestamp}.zip");
+
+                using var memStream = new MemoryStream();
+                using var zipStream = new ICSharpCode.SharpZipLib.Zip.ZipOutputStream(memStream);
+
+                var files = new List<string>
+                {
+                    App.Settings.FileLocation,
+                    App.State.FileLocation,
+                    App.FastFlags.FileLocation
+                };
+
+                foreach (var file in files)
+                {
+                    if (!File.Exists(file)) continue;
+
+                    var entry = new ICSharpCode.SharpZipLib.Zip.ZipEntry(Path.GetFileName(file)) { DateTime = DateTime.Now };
+                    zipStream.PutNextEntry(entry);
+
+                    using var fs = File.OpenRead(file);
+                    fs.CopyTo(zipStream);
+                }
+
+                zipStream.CloseEntry();
+                zipStream.Finish();
+                memStream.Position = 0;
+
+                using var outputStream = File.OpenWrite(backupZip);
+                memStream.CopyTo(outputStream);
+
+                Frontend.ShowMessageBox($"Backup successfully saved to:\n{backupZip}", MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                Frontend.ShowMessageBox($"Failed to create backup:\n{ex.Message}", MessageBoxImage.Error);
+            }
+        }
+
+        private void RestoreSettings()
+        {
+            try
+            {
+                var dialog = new Microsoft.Win32.OpenFileDialog
+                {
+                    Filter = "Zip Archive (*.zip)|*.zip|All Files (*.*)|*.*",
+                    InitialDirectory = Path.Combine(Paths.Base, "Backups")
+                };
+
+                if (dialog.ShowDialog() != true) return;
+
+                new ICSharpCode.SharpZipLib.Zip.FastZip().ExtractZip(dialog.FileName, Paths.Base, null);
+
+                Frontend.ShowMessageBox("Settings successfully restored from backup! Please restart Astralstrap to apply changes.", MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                Frontend.ShowMessageBox($"Failed to restore backup:\n{ex.Message}", MessageBoxImage.Error);
+            }
+        }
+
+        private void OpenScreenshots()
+        {
+            try
+            {
+                string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "Roblox");
+                if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+                Process.Start("explorer.exe", path);
+            }
+            catch (Exception ex)
+            {
+                Frontend.ShowMessageBox($"Failed to open Screenshots folder:\n{ex.Message}", MessageBoxImage.Error);
+            }
+        }
+
+        private void OpenRecordings()
+        {
+            try
+            {
+                string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyVideos), "Roblox");
+                if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+                Process.Start("explorer.exe", path);
+            }
+            catch (Exception ex)
+            {
+                Frontend.ShowMessageBox($"Failed to open Recordings folder:\n{ex.Message}", MessageBoxImage.Error);
+            }
         }
     }
 }
