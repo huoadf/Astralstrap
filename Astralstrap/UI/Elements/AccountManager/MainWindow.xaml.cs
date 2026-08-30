@@ -1,4 +1,4 @@
-﻿using Bloxstrap.Integrations;
+using Bloxstrap.Integrations;
 using Bloxstrap.UI.Elements.AccountManagers.Pages;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,7 +22,11 @@ namespace Bloxstrap.UI.Elements.AccountManagers
 
             AccountManager.Shared.ActiveAccountChanged += OnActiveAccountChanged;
 
-            UpdateNavigationItemsState();
+            Loaded += (_, _) =>
+            {
+                RootNavigation.Navigate(typeof(AccountsPage));
+                UpdateNavigationItemsState();
+            };
         }
 
         private void OnActiveAccountChanged(AltAccount? account)

@@ -374,6 +374,15 @@ namespace Bloxstrap.UI.ViewModels.AccountManagers
             dialog.ShowDialog();
         }
 
+        [RelayCommand]
+        private async Task OpenAltGenerator()
+        {
+            var dialog = new AltAccountGeneratorDialog();
+            dialog.Owner = Application.Current.MainWindow;
+            dialog.ShowDialog();
+            await LoadDataAsync();
+        }
+
         private async Task AddAccountByManualCookieAsync()
         {
             App.Logger.WriteLine($"{LOG_IDENT}::AddAccount", "Adding account via Manual Cookie");
