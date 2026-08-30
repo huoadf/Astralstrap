@@ -27,6 +27,7 @@ namespace Bloxstrap.UI.ViewModels.Settings
                 App.FastFlags.SetPreset("Rendering.RemoveGrass1", value ? "0" : null);
                 App.FastFlags.SetPreset("Rendering.RemoveGrass2", value ? "0" : null);
                 App.FastFlags.SetPreset("Rendering.RemoveGrass3", value ? "0" : null);
+                OnPropertyChanged(nameof(RemoveGrass));
             }
         }
 
@@ -47,6 +48,7 @@ namespace Bloxstrap.UI.ViewModels.Settings
                     App.FastFlags.SetPreset("Rendering.LowPolyMeshes4", null);
                 }
                 OnPropertyChanged(nameof(LowPolyMeshesEnabled));
+                OnPropertyChanged(nameof(LowPolyMeshesLevel));
             }
         }
 
@@ -85,25 +87,41 @@ namespace Bloxstrap.UI.ViewModels.Settings
         public bool PauseVoxelizer
         {
             get => App.FastFlags.GetPreset("Rendering.PauseVoxerlizer") == "True";
-            set => App.FastFlags.SetPreset("Rendering.PauseVoxerlizer", value ? "True" : null);
+            set
+            {
+                App.FastFlags.SetPreset("Rendering.PauseVoxerlizer", value ? "True" : null);
+                OnPropertyChanged(nameof(PauseVoxelizer));
+            }
         }
 
         public bool GraySky
         {
             get => App.FastFlags.GetPreset("Graphic.GraySky") == "True";
-            set => App.FastFlags.SetPreset("Graphic.GraySky", value ? "True" : null);
+            set
+            {
+                App.FastFlags.SetPreset("Graphic.GraySky", value ? "True" : null);
+                OnPropertyChanged(nameof(GraySky));
+            }
         }
 
         public bool FPSGraphOverlay
         {
             get => App.FastFlags.GetPreset("Rendering.FPSOverlay") == "True";
-            set => App.FastFlags.SetPreset("Rendering.FPSOverlay", value ? "True" : null);
+            set
+            {
+                App.FastFlags.SetPreset("Rendering.FPSOverlay", value ? "True" : null);
+                OnPropertyChanged(nameof(FPSGraphOverlay));
+            }
         }
 
         public bool UseFastFlagManager
         {
             get => App.Settings.Prop.UseFastFlagManager;
-            set => App.Settings.Prop.UseFastFlagManager = value;
+            set
+            {
+                App.Settings.Prop.UseFastFlagManager = value;
+                OnPropertyChanged(nameof(UseFastFlagManager));
+            }
         }
 
         public IReadOnlyDictionary<MSAAMode, string?> MSAALevels => FastFlagManager.MSAAModes;
@@ -111,7 +129,11 @@ namespace Bloxstrap.UI.ViewModels.Settings
         public MSAAMode SelectedMSAALevel
         {
             get => MSAALevels.FirstOrDefault(x => x.Value == App.FastFlags.GetPreset("Rendering.MSAA1")).Key;
-            set => App.FastFlags.SetPreset("Rendering.MSAA1", MSAALevels[value]);
+            set
+            {
+                App.FastFlags.SetPreset("Rendering.MSAA1", MSAALevels[value]);
+                OnPropertyChanged(nameof(SelectedMSAALevel));
+            }
         }
 
         public IReadOnlyDictionary<RenderingMode, string> RenderingModes => FastFlagManager.RenderingModes;
@@ -129,13 +151,18 @@ namespace Bloxstrap.UI.ViewModels.Settings
 
                 App.FastFlags.SetPresetEnum("Rendering.Mode", value.ToString(), "True");
                 App.FastFlags.SetPreset("Rendering.Mode.DisableD3D11", DisableD3D11.Contains(value) ? "True" : null);
+                OnPropertyChanged(nameof(SelectedRenderingMode));
             }
         }
 
         public bool FixDisplayScaling
         {
             get => App.FastFlags.GetPreset("Rendering.DisableScaling") == "True";
-            set => App.FastFlags.SetPreset("Rendering.DisableScaling", value ? "True" : null);
+            set
+            {
+                App.FastFlags.SetPreset("Rendering.DisableScaling", value ? "True" : null);
+                OnPropertyChanged(nameof(FixDisplayScaling));
+            }
         }
 
         public IReadOnlyDictionary<QualityLevel, string?> QualityLevels => FastFlagManager.QualityLevels;
@@ -153,6 +180,7 @@ namespace Bloxstrap.UI.ViewModels.Settings
                 {
                     App.FastFlags.SetPreset("Rendering.FrmQuality", FastFlagManager.QualityLevels[value]);
                 }
+                OnPropertyChanged(nameof(SelectedQualityLevel));
             }
         }
 
@@ -182,6 +210,7 @@ namespace Bloxstrap.UI.ViewModels.Settings
                     _preResetFlags = null;
                 }
 
+                NotifyAllPropertiesChanged();
                 RequestPageReloadEvent?.Invoke(this, EventArgs.Empty);
             }
         }
@@ -190,38 +219,75 @@ namespace Bloxstrap.UI.ViewModels.Settings
         public ICommand ApplyPerformanceBundleCommand => new RelayCommand(ApplyPerformanceBundle);
         public ICommand ApplyQualityBundleCommand => new RelayCommand(ApplyQualityBundle);
 
+        public void NotifyAllPropertiesChanged()
+        {
+            OnPropertyChanged(nameof(UseFastFlagManager));
+            OnPropertyChanged(nameof(RemoveGrass));
+            OnPropertyChanged(nameof(LowPolyMeshesEnabled));
+            OnPropertyChanged(nameof(LowPolyMeshesLevel));
+            OnPropertyChanged(nameof(PauseVoxelizer));
+            OnPropertyChanged(nameof(GraySky));
+            OnPropertyChanged(nameof(FPSGraphOverlay));
+            OnPropertyChanged(nameof(SelectedMSAALevel));
+            OnPropertyChanged(nameof(SelectedRenderingMode));
+            OnPropertyChanged(nameof(FixDisplayScaling));
+            OnPropertyChanged(nameof(SelectedQualityLevel));
+            OnPropertyChanged(nameof(ResetConfiguration));
+        }
+
         private void ApplyCompetitiveBundle()
         {
+            UseFastFlagManager = true;
             RemoveGrass = true;
             LowPolyMeshesEnabled = true;
             LowPolyMeshesLevel = 9;
             FPSGraphOverlay = true;
+            PauseVoxelizer = false;
+            GraySky = false;
+            FixDisplayScaling = true;
             SelectedRenderingMode = RenderingMode.Default;
+            SelectedMSAALevel = MSAAMode.x1;
+            SelectedQualityLevel = QualityLevel.Disabled;
+
+            NotifyAllPropertiesChanged();
             Frontend.ShowMessageBox("Applied 'Competitive Preset' (Maximum Visibility, Low Poly Meshes, Grass Removed, FPS Overlay On).", MessageBoxImage.Information);
-            RequestPageReloadEvent?.Invoke(this, EventArgs.Empty);
         }
 
         private void ApplyPerformanceBundle()
         {
+            UseFastFlagManager = true;
             RemoveGrass = true;
             LowPolyMeshesEnabled = true;
             LowPolyMeshesLevel = 9;
             FPSGraphOverlay = true;
-            App.FastFlags.SetPreset("Rendering.PauseVoxerlizer", "True");
-            App.FastFlags.SetPreset("Rendering.DisableScaling", "True");
-            Frontend.ShowMessageBox("Applied 'Max Performance Preset' (Optimized For Potato PCs & High Framerates).", MessageBoxImage.Information);
-            RequestPageReloadEvent?.Invoke(this, EventArgs.Empty);
+            PauseVoxelizer = true;
+            GraySky = false;
+            FixDisplayScaling = true;
+            SelectedRenderingMode = RenderingMode.Default;
+            SelectedMSAALevel = MSAAMode.Default;
+            SelectedQualityLevel = QualityLevel.Level1;
+
+            NotifyAllPropertiesChanged();
+            Frontend.ShowMessageBox("Applied 'Max FPS Preset' (Optimized For Potato PCs, Low Voxelizer & High Framerates).", MessageBoxImage.Information);
         }
 
         private void ApplyQualityBundle()
         {
+            UseFastFlagManager = true;
             RemoveGrass = false;
             LowPolyMeshesEnabled = false;
+            PauseVoxelizer = false;
+            GraySky = false;
+            FixDisplayScaling = true;
             SelectedMSAALevel = MSAAMode.x4;
+            SelectedQualityLevel = QualityLevel.Level21;
+            SelectedRenderingMode = RenderingMode.Default;
+
             App.FastFlags.SetPreset("Rendering.TextureQuality.OverrideEnabled", "True");
             App.FastFlags.SetPreset("Rendering.TextureQuality.Level", "3");
-            Frontend.ShowMessageBox("Applied 'Ultra Quality Preset' (4x MSAA, Max Texture Resolution, Full Foliage).", MessageBoxImage.Information);
-            RequestPageReloadEvent?.Invoke(this, EventArgs.Empty);
+
+            NotifyAllPropertiesChanged();
+            Frontend.ShowMessageBox("Applied 'Ultra Quality Preset' (Level 21 Graphics, 4x MSAA, Max Textures, Full Foliage).", MessageBoxImage.Information);
         }
     }
 }
