@@ -1,4 +1,4 @@
-﻿using Bloxstrap.UI.ViewModels.About;
+using Bloxstrap.UI.ViewModels.About;
 
 using System.Windows.Input;
 using System.Windows.Media.Animation;
@@ -43,6 +43,13 @@ namespace Bloxstrap.UI.Elements.About.Pages
                 var storyboard = Resources["EggStoryboard"] as Storyboard;
                 storyboard!.Begin();
             }
+        }
+
+        private void OpenDiagnostics_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            var dialog = new Bloxstrap.UI.Elements.Dialogs.DiagnosticsDialog();
+            dialog.Owner = System.Windows.Window.GetWindow(this);
+            dialog.ShowDialog();
         }
     }
 }
