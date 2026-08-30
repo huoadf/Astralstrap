@@ -1,5 +1,5 @@
 <Solution>
-  <Project Path="Bloxstrap/Bloxstrap.csproj" />
+  <Project Path="Astralstrap/Astralstrap.csproj" />
   <Project Path="wpfui/src/Wpf.Ui/Wpf.Ui.csproj" />
   <Project Path="ColorPicker/src/ColorPicker/ColorPicker.csproj" />
   <Properties Name="ExtensibilityGlobals" Scope="PostLoad">
