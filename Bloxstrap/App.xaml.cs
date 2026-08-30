@@ -23,11 +23,11 @@ namespace Bloxstrap
 #else
         public const string ProjectName = "Astralstrap";
 #endif
-        public const string ProjectOwner = "Astralstrap";
-        public const string ProjectRepository = "Astralstrap/Astralstrap";
-        public const string ProjectDownloadLink = "https://github.com/Astralstrap/Astralstrap/releases";
+        public const string ProjectOwner = "huoadf";
+        public const string ProjectRepository = "huoadf/Astralstrap";
+        public const string ProjectDownloadLink = "https://github.com/huoadf/Astralstrap/releases";
         public const string ProjectHelpLink = "https://github.com/bloxstraplabs/bloxstrap/wiki";
-        public const string ProjectSupportLink = "https://github.com/Astralstrap/Astralstrap/issues/new";
+        public const string ProjectSupportLink = "https://github.com/huoadf/Astralstrap/issues/new";
         public const string ProjectRemoteDataLink = "https://raw.githubusercontent.com/RealMeddsam/config/refs/heads/main/Data.json";
 
         public const string RobloxPlayerAppName = "RobloxPlayerBeta.exe";
