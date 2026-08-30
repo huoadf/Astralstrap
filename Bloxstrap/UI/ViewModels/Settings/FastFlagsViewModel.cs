@@ -1,3 +1,4 @@
+using System.Windows;
 using System.Windows.Input;
 
 using CommunityToolkit.Mvvm.Input;
@@ -183,6 +184,44 @@ namespace Bloxstrap.UI.ViewModels.Settings
 
                 RequestPageReloadEvent?.Invoke(this, EventArgs.Empty);
             }
+        }
+
+        public ICommand ApplyCompetitiveBundleCommand => new RelayCommand(ApplyCompetitiveBundle);
+        public ICommand ApplyPerformanceBundleCommand => new RelayCommand(ApplyPerformanceBundle);
+        public ICommand ApplyQualityBundleCommand => new RelayCommand(ApplyQualityBundle);
+
+        private void ApplyCompetitiveBundle()
+        {
+            RemoveGrass = true;
+            LowPolyMeshesEnabled = true;
+            LowPolyMeshesLevel = 9;
+            FPSGraphOverlay = true;
+            SelectedRenderingMode = RenderingMode.Default;
+            Frontend.ShowMessageBox("Applied 'Competitive Preset' (Maximum Visibility, Low Poly Meshes, Grass Removed, FPS Overlay On).", MessageBoxImage.Information);
+            RequestPageReloadEvent?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void ApplyPerformanceBundle()
+        {
+            RemoveGrass = true;
+            LowPolyMeshesEnabled = true;
+            LowPolyMeshesLevel = 9;
+            FPSGraphOverlay = true;
+            App.FastFlags.SetPreset("Rendering.PauseVoxerlizer", "True");
+            App.FastFlags.SetPreset("Rendering.DisableScaling", "True");
+            Frontend.ShowMessageBox("Applied 'Max Performance Preset' (Optimized For Potato PCs & High Framerates).", MessageBoxImage.Information);
+            RequestPageReloadEvent?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void ApplyQualityBundle()
+        {
+            RemoveGrass = false;
+            LowPolyMeshesEnabled = false;
+            SelectedMSAALevel = MSAAMode.x4;
+            App.FastFlags.SetPreset("Rendering.TextureQuality.OverrideEnabled", "True");
+            App.FastFlags.SetPreset("Rendering.TextureQuality.Level", "3");
+            Frontend.ShowMessageBox("Applied 'Ultra Quality Preset' (4x MSAA, Max Texture Resolution, Full Foliage).", MessageBoxImage.Information);
+            RequestPageReloadEvent?.Invoke(this, EventArgs.Empty);
         }
     }
 }
