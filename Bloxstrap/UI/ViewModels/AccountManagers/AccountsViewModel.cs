@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  Froststrap
  *  Copyright (c) Froststrap Team
  *
@@ -62,7 +62,7 @@ namespace Bloxstrap.UI.ViewModels.AccountManagers
         private int _followingCount;
 
         [ObservableProperty]
-        private ObservableCollection<string> _addMethods = new(new[] { "Quick Sign-In", "Browser", "Manual" });
+        private ObservableCollection<string> _addMethods = new(new[] { "Quick Sign-In", "Browser", "Manual", "Alt Generator" });
 
         [ObservableProperty]
         private string _selectedAddMethod = "Quick Sign-In";
@@ -339,6 +339,14 @@ namespace Bloxstrap.UI.ViewModels.AccountManagers
                 else if (string.Equals(SelectedAddMethod, "Manual", StringComparison.OrdinalIgnoreCase))
                 {
                     await AddAccountByManualCookieAsync();
+                    return;
+                }
+                else if (string.Equals(SelectedAddMethod, "Alt Generator", StringComparison.OrdinalIgnoreCase) || string.Equals(SelectedAddMethod, "Generator", StringComparison.OrdinalIgnoreCase))
+                {
+                    var dialog = new AltAccountGeneratorDialog();
+                    dialog.Owner = Application.Current.MainWindow;
+                    dialog.ShowDialog();
+                    await LoadDataAsync();
                     return;
                 }
 

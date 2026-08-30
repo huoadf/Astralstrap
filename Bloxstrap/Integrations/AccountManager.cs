@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  Froststrap
  *  Copyright (c) Froststrap Team
  *
@@ -884,6 +884,41 @@ namespace Bloxstrap.Integrations
             catch (Exception ex)
             {
                 App.Logger.WriteException(LOG_IDENT_ADD_MANUAL, ex);
+                return null;
+            }
+        }
+
+        public async Task<AltAccount?> ValidateAndAddCookieAsync(string cookie)
+        {
+            try
+            {
+                using var handler = new System.Net.Http.HttpClientHandler
+                {
+                    CookieContainer = new System.Net.CookieContainer()
+                };
+                handler.CookieContainer.Add(new System.Net.Cookie(".ROBLOSECURITY", cookie, "/", ".roblox.com"));
+
+                using var client = new System.Net.Http.HttpClient(handler);
+                var response = await client.GetAsync("https://users.roblox.com/v1/users/authenticated");
+
+                if (!response.IsSuccessStatusCode)
+                    return null;
+
+                string json = await response.Content.ReadAsStringAsync();
+                var jo = JObject.Parse(json);
+
+                long userId = jo["id"]?.Value<long>() ?? 0;
+                string username = jo["name"]?.Value<string>() ?? string.Empty;
+                string displayName = jo["displayName"]?.Value<string>() ?? string.Empty;
+
+                if (userId == 0 || string.IsNullOrEmpty(username))
+                    return null;
+
+                return AddManualAccount(cookie, userId, username, displayName);
+            }
+            catch (Exception ex)
+            {
+                App.Logger.WriteLine("AccountManager::ValidateAndAddCookieAsync", ex.Message);
                 return null;
             }
         }
