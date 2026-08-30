@@ -1,4 +1,4 @@
-﻿namespace Bloxstrap.Integrations
+namespace Bloxstrap.Integrations
 {
     public class ActivityWatcher : IDisposable
     {
@@ -109,6 +109,7 @@
             }
 
             LoadGameHistory();
+            AstralMcpServer.Initialize(this);
         }
 
         public async void Start()
@@ -779,6 +780,7 @@
             }
 
             SaveGameHistory();
+            PlayHistoryManager.Instance.RecordSession(activity);
             OnHistoryUpdated?.Invoke(this, EventArgs.Empty);
 
             App.Logger.WriteLine("ActivityWatcher::AddToHistory",
