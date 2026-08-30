@@ -28,6 +28,7 @@ namespace Bloxstrap.UI.Elements.Settings.Pages
             _viewModel.OpenCommunityModsEvent += OpenCommunityMods;
             _viewModel.OpenPresetModsEvent += OpenPresetMods;
             _viewModel.OpenModPreviewEvent += OpenModPreview;
+            _viewModel.OpenCustomSoundsEvent += OpenCustomSounds;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e) => SetupViewModel();
@@ -95,6 +96,13 @@ namespace Bloxstrap.UI.Elements.Settings.Pages
         private void OpenModPreview(object? sender, EventArgs e)
         {
             var dialog = new Bloxstrap.UI.Elements.Dialogs.ModPreviewDialog();
+            dialog.Owner = Window.GetWindow(this);
+            dialog.ShowDialog();
+        }
+
+        private void OpenCustomSounds(object? sender, EventArgs e)
+        {
+            var dialog = new Bloxstrap.UI.Elements.Dialogs.CustomSoundsDialog();
             dialog.Owner = Window.GetWindow(this);
             dialog.ShowDialog();
         }
