@@ -1,138 +1,84 @@
-<h1 align="center">
-    Froststrap
+﻿<h1 align="center">
+    Astralstrap
 </h1>
 
 <p align="center">
-    Froststrap is a fork of <a href="https://github.com/fishstrap/fishstrap.git"><strong>Fishstrap</strong></a> focused on additional features like performance, customization.
+    <strong>Astralstrap</strong> is an expanded, modernized, and privacy-conscious Roblox bootstrapper designed for peak performance, comprehensive alt account orchestration, dynamic cosmetic modding, and deep FastFlag customization.
 </p>
 
 <p align="center">
-    <img src="./.resources/froststrap.png" height=200 alt="logo"/>
-</p>
-
-<p align="center">
-    If you'd like to support our project, consider giving this repository a star!
+    <img src="./.resources/astralstrap.png" height="200" alt="Astralstrap Logo"/>
 </p>
 
 <div align="center">
 
-[![License][badge-repo-license]][repo-license]
-[![Downloads (Total)][badge-repo-downloads-total]][repo-releases]
-[![Downloads (Latest)][badge-repo-downloads]][repo-releases]
-[![Version][badge-repo-latest]][repo-latest]
-[![Stars][badge-repo-stars]][repo-stargazer]
-[![Discord][badge-discord]][discord-invite]
+[![License](https://img.shields.io/badge/license-AGPL--3.0%20%2F%20MIT-8a2be2?style=for-the-badge)](./LICENSE)
+[![Platform](https://img.shields.io/badge/platform-Windows%2010%2B-00d4ff?style=for-the-badge)](https://github.com/huoadf/Astralstrap)
+[![Framework](https://img.shields.io/badge/.NET-9.0--windows-792ee5?style=for-the-badge)](https://dotnet.microsoft.com/)
+[![GitHub Repo](https://img.shields.io/badge/GitHub-huoadf%2FAstralstrap-00f0ff?style=for-the-badge&logo=github)](https://github.com/huoadf/Astralstrap)
 
 </div>
 
-> [!CAUTION]
-> The repo, [Froststrap/Froststrap](https://github.com/Froststrap/Froststrap.git), and [our website](https://froststrap.github.io), are the **ONLY PLACES** you should
-> download the binary/executable from, as any other source is **NOT** affiliated with us, and is a potential threat. 
+---
 
->[!NOTE]
-> We are still working on Froststrap, don't stress, you can look at other branches.
-> We are currently working on adding Linux and macOS support, as apart of 2.0
+## ✨ Features & Architecture
+
+### 👥 Account Management & Alt Control
+- **Alt Account Generator**: Instant throwaway credential generator with randomized gaming usernames, strong cryptographic passwords, 13+ birthdate presets, and 1-click token validator/importer.
+- **Automated Multi-Instance Launcher**: Staggered, scheduled multi-client launcher across all saved accounts with customizable delay intervals and optional target Place ID / Job ID.
+- **System Tray Account Switcher**: Switch between active DPAPI-encrypted Roblox accounts in 1 click directly from the Windows notification area.
+- **Menu & Idle Rich Presence**: Displays *"In Roblox Menu" / "Browsing Experiences"* when Roblox is open before joining a game.
+
+### ⚡ FastFlag Suite & 1-Click Bundles
+- **1-Click Presets**:
+  - **Competitive**: Strips grass, enables LOD level 9 low-poly geometry, enables FPS overlay.
+  - **Max FPS**: Pauses voxelizer, strips grass, disables DPI scaling for maximum performance.
+  - **Ultra Quality**: 4x MSAA, full foliage, maximum level 3 texture overrides.
+- **Flag Diff Analyzer**: Compare active flags against saved or preset profiles with live conflict detection.
+- **FPS & Frametime Graph Overlay**: Real-time HUD toggle for `FFlagDebugDisplayFPS`.
+
+### 🎵 Audio & Cosmetic Modding
+- **Custom Sound & Death Audio Manager**: 1-click previewer and installer for custom character reset sounds (Classic "OOF", Default, or custom `.ogg`/`.mp3`/`.wav` files).
+- **Mod Texture & Asset Previewer**: In-app inspector to browse and preview image/texture assets inside any installed mod before launching.
+- **Mod Collision Checker**: Detects overlapping file paths across mods and determines priority winners.
+
+### 📊 Local Analytics & Matcha / MCP Sidecar
+- **Play History & Session Analytics**: Aggregates total playtime, per-game history, session counts, and dates stored locally in `Data/PlayStats.json`.
+- **Local Co-Player Tracker**: Encounters database stored strictly locally in `Data/CoPlayers.json` with zero external tracking.
+- **Matcha / MCP Server**: Lightweight HTTP loopback JSON-RPC server listening on `http://127.0.0.1:37482/` with `/status`, `/playtime`, `/coplayers`, and `/mcp` endpoints for local AI assistants.
+
+### 🎨 Visuals, Geometry & Diagnostics
+- **Celestial Identity**: Modern 8-point astral star with neon cyan and cosmic violet glassmorphism.
+- **Modern Animated Glow Splash**: Neon-cyan pulsing bootstrapper dialog.
+- **Layout & Corner Geometry**: Customizable card spacing (Standard, Compact, Minimal) and corner rounding (Rounded, Modern Sharp, Pill).
+- **Diagnostics & Crash Analyzer**: In-depth inspection of Roblox crash dumps (`.dmp`), engine logs, system environment, and 1-click diagnostic `.zip` export.
 
 ---
 
-## Key Improvements Fishstrap
+## 🛠️ Building From Source
 
-### Integrations
-- Automatically rejoin servers you were disconnected from due to inactivity
-- Disable Roblox’s built-in screenshot and video recording system
-- Custom Froststrap Discord RPC that shows the current page/dialog
-- Replace "Playing Roblox" with the name of the game you're playing using Custom Status Display
-- The playtime counter shows both total and session playtime
-- Roblox Studio RPC integrated within Froststrap
-- Change the Studio RPC thumbnail depending on the script that is open
-- Show script type, name, and number of lines of code
+### Prerequisites
+- [.NET 9.0 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
+- Windows 10 (Version 1809+) or Windows 11
+- Visual Studio 2022 or VS Code with C# Dev Kit
 
-### Bootstrapper
-- Change the Roblox process priority
-- Automatically close the Roblox Crash Handler to reduce memory usage
-- Integrated cleaner tool to remove leftover files
-- Multi-instance launching support
+### Compilation
+```powershell
+# Clone repository
+git clone https://github.com/huoadf/Astralstrap.git
+cd Astralstrap
 
-### Mods
-- Multi-mod system that allows you to download many mods at once
-- Select when to apply the mod (player/studio)
-- Download community-made mods directly from within the app
-- Generate mods using a hex code, with the option to also color the cursor, Shift Lock, or Emote Wheel
-- Change the cursor, Shift Lock, death sound, and game font by selecting a file
-- Use custom cursor sets to change between your cursors faster
+# Build solution
+dotnet build Bloxstrap/Bloxstrap.csproj -c Release
+```
 
-### FastFlag Enhancements
-- Automatic message when applying FastFlags that are not in the Roblox FastFlag Allowlist
-- Create or use FastFlag profiles
-- Change all Roblox FastFlags in the allowlist via the FastFlag settings
-- Click 'Clean List' to remove flags that are not in the Roblox FastFlag Allowlist
-
-### UI & Appearance
-- Fully customizable bootstrapper launcher
-- Change the app font to any font you prefer
-- Supports image and gradient background themes
-- Built-in app themes
-- Change the window background to Aero, Acrylic, or Mica
-
-### Settings
-- Easily switch Roblox update channels
-- Option to fully block Roblox updates
-- Replace Roblox’s changing version-xxxxx folders with a non-changing folder
-- View all currently available Roblox channels
-
-### Extra Features
-- Remembers the last opened tab
-- Easily import settings from other bootstrappers such as Fishstrap and Bloxstrap
-- Create game shortcuts for faster game joining
-- Join servers in your region more easily using the region selector
-- Join servers in your selected region through the system tray while playing
-- Built-in account manager
-
-More features are planned! You can also suggest new features in the Issues section.
+The output binary will be generated under `Bloxstrap/bin/Release/net9.0-windows/Astralstrap.exe`.
 
 ---
 
-## Licensing
+## 📜 Licensing
 
-Froststrap uses a **multi-license model** depending on the origin of the code:
-
-| Code | License |
-|---|---|
-| Code written or modified by Froststrap | [AGPL-3.0](https://www.gnu.org/licenses/agpl-3.0.en.html) |
-| Upstream code inherited from Fishstrap/Bloxstrap | [MIT](https://opensource.org/licenses/MIT) |
-| Nix-related code (unmodified) | [Unlicense](https://unlicense.org/) |
-
-**In plain terms:**
-- If Froststrap wrote it or modified it, it's **AGPL-3.0** — any modifications must be open-sourced under the same license
-- Code inherited from upstream (Fishstrap / Bloxstrap) remains under its original **MIT** license
-- Nix-specific code is **unlicensed** (public domain) and is strictly limited to Nix-related functionality
-
-When in doubt about which license applies to a specific file, check the file header or refer to the [LICENSE](./LICENSE) file.
-
-## Star History
-
-### To support the development of Froststrap, consider giving the repository a star.
-
-<a href="https://www.star-history.com/?repos=Froststrap%2FFroststrap%2CRealMeddsam%2FFroststrap%2CMeddsam%2FFroststrap&type=date&legend=top-left">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/image?repos=Froststrap/Froststrap%2CRealMeddsam/Froststrap%2CMeddsam/Froststrap&type=date&theme=dark&legend=top-left" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/image?repos=Froststrap/Froststrap%2CRealMeddsam/Froststrap%2CMeddsam/Froststrap&type=date&legend=top-left" />
-   <img alt="Star History Chart" src="https://api.star-history.com/image?repos=Froststrap/Froststrap%2CRealMeddsam/Froststrap%2CMeddsam/Froststrap&type=date&legend=top-left" />
- </picture>
-</a>
-
-<!-- Badge defs -->
-[badge-repo-license]: https://img.shields.io/github/license/Froststrap/Froststrap?style=for-the-badge&color=37add9
-[badge-repo-downloads]: https://img.shields.io/github/downloads/Froststrap/Froststrap/latest/total?style=for-the-badge&color=37add9
-[badge-repo-downloads-total]: https://img.shields.io/github/downloads/Froststrap/Froststrap/total?style=for-the-badge&color=37add9
-[badge-repo-latest]: https://img.shields.io/github/v/release/Froststrap/Froststrap?style=for-the-badge&color=37add9
-[badge-repo-stars]: https://img.shields.io/github/stars/Froststrap/Froststrap?style=for-the-badge&color=37add9
-[badge-discord]: https://img.shields.io/discord/1364660238963179520?style=for-the-badge&label=discord&color=5865f2
-
-[repo-license]: https://github.com/Froststrap/Froststrap/blob/main/LICENSE
-[repo-actions]: https://github.com/Froststrap/Froststrap/actions
-[repo-releases]: https://github.com/Froststrap/Froststrap/releases
-[repo-latest]: https://github.com/Froststrap/Froststrap/releases/latest
-[repo-stargazer]: https://github.com/Froststrap/Froststrap/stargazers
-
-[discord-invite]: https://discord.gg/KdR9vpRcUN
+Astralstrap follows a multi-license model:
+- Modifications authored by Astralstrap / Froststrap are licensed under the **[GNU AGPL-3.0](./LICENSE)**.
+- Code inherited from upstream Fishstrap / Bloxstrap remains under the **[MIT License](https://opensource.org/licenses/MIT)**.
+- Nix-specific components are in the public domain (**[Unlicense](https://unlicense.org/)**).
