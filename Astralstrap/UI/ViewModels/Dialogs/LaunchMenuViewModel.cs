@@ -1,4 +1,4 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 
@@ -18,6 +18,12 @@ namespace Bloxstrap.UI.ViewModels.Installer
 
         public ICommand LaunchAboutCommand => new RelayCommand(LaunchAbout);
 
+        public ICommand LaunchAccountManagerCommand => new RelayCommand(LaunchAccountManager);
+
+        public ICommand LaunchMultiLaunchCommand => new RelayCommand(LaunchMultiLaunch);
+
+        public ICommand LaunchDiagnosticsCommand => new RelayCommand(LaunchDiagnostics);
+
         public event EventHandler<NextAction>? CloseWindowRequest;
 
         private void LaunchSettings() => CloseWindowRequest?.Invoke(this, NextAction.LaunchSettings);
@@ -31,5 +37,23 @@ namespace Bloxstrap.UI.ViewModels.Installer
         private void LaunchRobloxStudio() => CloseWindowRequest?.Invoke(this, NextAction.LaunchRobloxStudio);
 
         private void LaunchAbout() => new MainWindow().ShowDialog();
+
+        private void LaunchAccountManager()
+        {
+            var window = new Bloxstrap.UI.Elements.AccountManagers.MainWindow();
+            window.ShowDialog();
+        }
+
+        private void LaunchMultiLaunch()
+        {
+            var dialog = new Bloxstrap.UI.Elements.Dialogs.MultiLaunchDialog();
+            dialog.ShowDialog();
+        }
+
+        private void LaunchDiagnostics()
+        {
+            var dialog = new Bloxstrap.UI.Elements.Dialogs.DiagnosticsDialog();
+            dialog.ShowDialog();
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿<base:WpfUiWindow x:Class="Bloxstrap.UI.Elements.Dialogs.LaunchMenuDialog"
+<base:WpfUiWindow x:Class="Bloxstrap.UI.Elements.Dialogs.LaunchMenuDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -127,26 +127,46 @@
                 <!--  Separator  -->
                 <Border Margin="12" />
 
-                <!--  Wiki Button  -->
+                <!--  Alt Control Button  -->
                 <ui:CardAction
                     Width="285"
                     Margin="0,10,0,0"
-                    Command="models:GlobalViewModel.OpenWebpageCommand"
-                    CommandParameter="https://github.com/Meddsam/Froststrap/wiki"
-                    Icon="BookQuestionMark24"
+                    Command="{Binding LaunchMultiLaunchCommand, Mode=OneTime}"
+                    Icon="People24"
                     IconFilled="False"
                     TabIndex="2">
                     <StackPanel>
                         <TextBlock
                             FontSize="14"
-                            
-                            Text="{x:Static resources:Strings.LaunchMenu_Wiki_Title}" />
+                            Text="Alt Manager &amp; Multi-Launch" />
                         <TextBlock
                             Margin="0,2,0,0"
                             Padding="0,0,16,0"
                             FontSize="12"
                             Foreground="Gray"
-                            Text="{x:Static resources:Strings.LaunchMenu_Wiki_Description}" />
+                            Text="Generator &amp; staggered instances." />
+                    </StackPanel>
+                </ui:CardAction>
+
+                <!--  Wiki Button  -->
+                <ui:CardAction
+                    Width="285"
+                    Margin="0,8,0,0"
+                    Command="models:GlobalViewModel.OpenWebpageCommand"
+                    CommandParameter="https://github.com/huoadf/Astralstrap"
+                    Icon="BookQuestionMark24"
+                    IconFilled="False"
+                    TabIndex="3">
+                    <StackPanel>
+                        <TextBlock
+                            FontSize="14"
+                            Text="Astralstrap GitHub" />
+                        <TextBlock
+                            Margin="0,2,0,0"
+                            Padding="0,0,16,0"
+                            FontSize="12"
+                            Foreground="Gray"
+                            Text="View releases, wiki &amp; updates." />
                     </StackPanel>
                 </ui:CardAction>
             </StackPanel>
